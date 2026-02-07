@@ -1,4 +1,4 @@
-# OmniShell Support Library
+# OmniShell html Support Library
 
 OmniShell 是一个为现代桌面应用设计的**轻量级运行时支持库**。它不是一个终端应用，而是为 HTML/JS 开发者提供原生能力的 **SDK** 和 **Rust 内核组件**。
 
