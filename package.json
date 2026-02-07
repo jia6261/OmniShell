@@ -1,19 +1,30 @@
 {
-  "name": "omnishell-runtime",
-  "private": true,
-  "version": "0.1.0",
+  "name": "@omnishell/sdk",
+  "version": "1.0.0",
+  "description": "OmniShell Frontend SDK for lightweight HTML desktop apps",
+  "main": "packages/sdk/index.js",
   "type": "module",
+  "files": [
+    "packages/sdk"
+  ],
   "scripts": {
-    "dev": "tauri dev",
-    "build": "tauri build",
-    "tauri": "tauri"
+    "test": "echo \"Error: no test specified\""
   },
+  "keywords": [
+    "omnishell",
+    "desktop",
+    "tauri",
+    "runtime",
+    "sdk"
+  ],
+  "author": "OmniShell Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jia6261/OmniShell.git"
+  },
+  "homepage": "https://github.com/jia6261/OmniShell#readme",
   "dependencies": {
-    "@tauri-apps/api": "^2.0.0-beta",
-    "@tauri-apps/plugin-shell": "^2.0.0-beta"
-  },
-  "devDependencies": {
-    "@tauri-apps/cli": "^2.0.0-beta",
-    "typescript": "^5.0.0"
+    "@tauri-apps/api": "^2.0.0-beta"
   }
 }

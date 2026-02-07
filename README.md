@@ -1,53 +1,51 @@
-# OmniShell
+# OmniShell Support Library
 
-OmniShell 是一个为开发者设计的轻量级桌面应用运行时支持库。它的核心目标是解决现代桌面应用由于内置完整浏览器内核而导致的内存占用过高问题。
+OmniShell 是一个为现代桌面应用设计的**轻量级运行时支持库**。它不是一个终端应用，而是为 HTML/JS 开发者提供原生能力的 **SDK** 和 **Rust 内核组件**。
 
-## 主要功能
+## 核心架构
 
-- **内核共享**：多个 HTML 应用可以共用一个底层内核进程，极大节省系统资源。
-- **全平台互通**：支持跨窗口、跨应用的消息广播与数据同步。
-- **原生视觉**：内置了对 Windows Mica（云母）、macOS Vibrancy 等高级毛玻璃特效的支持。
-- **全系统兼容**：支持 Windows、macOS 以及各种主流 Linux 发行版。
+- **`packages/sdk`**: 前端 JavaScript SDK，用于在 HTML 应用中调用原生功能。
+- **`src-tauri`**: Rust 核心库，提供跨平台玻璃特效、内核共享和全局消息总线。
+- **`examples`**: 使用 OmniShell 库构建的应用示例。
 
-## 快速开始
+## 如何集成到您的项目
 
-### 1. 前提条件
+### 1. 引入前端 SDK
 
-确保您的开发环境已安装以下工具：
-- [Node.js](https://nodejs.org/) (v18+)
-- [Rust](https://rustup.rs/)
-- 对应的系统依赖（参考 [Tauri 文档](https://tauri.app/v1/guides/getting-started/prerequisites)）
-
-### 2. 安装与运行
-
-```bash
-# 安装依赖
-npm install
-
-# 启动开发模式
-npm run tauri dev
-
-# 构建安装包
-npm run tauri build
-```
-
-## 开发者指南
-
-在您的 HTML 应用中引入支持库：
+您可以将 `packages/sdk/index.js` 复制到您的项目中，或者通过 npm 引用：
 
 ```javascript
-import { Omni } from './lib/omni-bridge.js';
+import { Omni } from './omnishell/sdk/index.js';
 
-// 打开一个新窗口
+// 启动一个受管窗口
 Omni.window.open({
-    id: 'my-app',
-    title: '我的应用',
-    url: 'https://example.com'
+    id: 'sub-app',
+    title: '子应用',
+    url: 'https://your-app-url.com'
 });
 
-// 向其他窗口发送消息
-Omni.bus.emit('message-channel', { text: '你好，世界！' });
+// 跨应用消息同步
+Omni.bus.emit('sync-data', { key: 'value' });
 ```
+
+### 2. 后端内核集成
+
+如果您正在开发自己的 Tauri 应用并希望使用 OmniShell 的能力，可以将 `src-tauri` 中的核心逻辑作为插件引入。
+
+## 主要特性
+
+| 特性 | 描述 |
+| :--- | :--- |
+| **内核共享** | 多个窗口共享同一个 Rust 进程，显著降低内存占用 |
+| **原生视觉** | 自动适配 Windows Mica (Win11) 和 macOS Vibrancy |
+| **全局总线** | 跨窗口、跨应用的事件同步机制 |
+| **无边框支持** | 内置自定义拖拽区域支持，实现现代 UI 视觉 |
+
+## 开发与贡献
+
+1. 克隆仓库：`git clone https://github.com/jia6261/OmniShell.git`
+2. 查看示例：`cd examples/launcher`
+3. 运行示例：需配合外层 Tauri 环境运行。
 
 ## 许可证
 
