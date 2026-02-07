@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniShell Launcher</title>
+    <style>
+        :root {
+            --omni-bg: rgba(255, 255, 255, 0.6);
+            --omni-sidebar: rgba(240, 240, 240, 0.5);
+            --radius-lg: 12px;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --omni-bg: rgba(30, 30, 30, 0.6);
+                --omni-sidebar: rgba(45, 45, 45, 0.5);
+            }
+        }
+        body {
+            margin: 0; padding: 0;
+            font-family: system-ui, sans-serif;
+            background: transparent;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+        }
+        @media (prefers-color-scheme: dark) { body { color: #fff; } }
+        .titlebar-drag-region {
+            position: absolute; top: 0; left: 0; right: 0; height: 32px; z-index: 9999;
+            -webkit-app-region: drag; 
+        }
+        .sidebar {
+            width: 68px; background: var(--omni-sidebar);
+            display: flex; flex-direction: column; align-items: center; padding-top: 40px;
+            border-right: 1px solid rgba(128,128,128, 0.1);
+        }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: #0099ff; margin-bottom: 20px; }
+        .main-content { flex: 1; background: var(--omni-bg); padding: 40px 20px; }
+        .app-card {
+            background: rgba(128,128,128, 0.1); border-radius: var(--radius-lg);
+            padding: 15px; margin-top: 10px; cursor: pointer; -webkit-app-region: no-drag;
+        }
+        .app-card:hover { background: rgba(128,128,128, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="titlebar-drag-region"></div>
+    <div class="sidebar"><div class="avatar"></div></div>
+    <div class="main-content">
+        <h2>OmniShell Center</h2>
+        <div class="app-card" onclick="launch('music')">🎵 启动音乐模块</div>
+        <div class="app-card" onclick="launch('chat')">💬 启动聊天模块</div>
+        <div style="margin-top:20px; font-size:12px; opacity:0.6" id="status">Ready</div>
+    </div>
+    <script type="module">
+        import { Omni } from './lib/omni-bridge.js';
+        window.launch = (type) => {
+            const url = type === 'music' ? 'https://music.163.com' : 'https://www.bing.com';
+            Omni.window.open({ id: `win-${type}`, title: type, url: url });
+            document.getElementById('status').innerText = `Launching ${type}...`;
+        };
+    </script>
+</body>
+</html>
